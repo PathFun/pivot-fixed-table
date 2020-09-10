@@ -5,7 +5,7 @@
     <div class="flex-row flex1 h-100">
       <div class="w150 mr10 h-100 flex-column">
         <div class="w-100 flex1 border1 mb10 drag-area" :class="dragAreaClass">
-          <div class="mb3">targetSourceFieldKeys</div>
+          <div class="mb3">指标</div>
           <draggable
             v-model="internal.targetSourceFieldKeys"
             class="targetSourceFieldKeys"
@@ -27,7 +27,7 @@
           </draggable>
         </div>
         <div class="w-100 flex1 border1 drag-area" :class="dragAreaClass">
-          <div class="mb3">availableFieldKeys</div>
+          <div class="mb3">维度</div>
           <draggable
             v-model="internal.availableFieldKeys"
             class="availableFieldKeys"
