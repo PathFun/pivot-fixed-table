@@ -4,6 +4,10 @@
 ```$xslt
 npm i pivot-fixed-table 
 ```
+## github
+```$xslt
+https://github.com/PathFun/pivot-fixed-table.git
+```
 
 ## import
 ```$xslt

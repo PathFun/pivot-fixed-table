@@ -159,7 +159,7 @@ export default {
         mapValues(obj, (v) => {
           if (v.noformat() > maxValue) { item = v; maxValue = v.noformat(); }
         });
-        const w = getTextWidth(item.value(), this.fontSize)[0];
+        const w = item ? getTextWidth(item.value(), this.fontSize)[0] : 0;
         if (w > maxWidth) maxWidth = w;
         return `${maxWidth + paddingWidth}px`;
       });
