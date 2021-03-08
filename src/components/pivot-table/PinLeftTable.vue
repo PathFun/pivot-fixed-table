@@ -87,6 +87,14 @@ export default {
       type: Object,
       default: () => ({}),
     },
+    autoWidth: {
+      type: Boolean,
+      default: true,
+    },
+    defaultFieldWidth: {
+      type: Number,
+      default: 100,
+    },
   },
   data() {
     return {
@@ -113,13 +121,22 @@ export default {
     getMaxTopLeft() {
       const withList = [];
       const total = this.internalRowFields.reduce((t, w) => {
-        const width = w.maxWidth > w.labelWidth ? w.maxWidth : w.labelWidth;
+        let width = 0;
+        if (this.autoWidth) {
+          width = w.maxWidth > w.labelWidth ? w.maxWidth : w.labelWidth;
+        } else {
+          width = w.width || this.defaultFieldWidth;
+        }
         withList.push(width);
         return t + width;
       }, 0);
       let max = 0;
       this.internalColFields.forEach((d) => {
-        if (d.labelWidth > max) max = d.labelWidth;
+        if (this.autoWidth) {
+          if (d.labelWidth > max) max = d.labelWidth;
+        } else if ((d.width || this.defaultFieldWidth) > max) {
+          max = (d.width || this.defaultFieldWidth);
+        }
       });
       withList.push(max);
       return {

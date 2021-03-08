@@ -5,12 +5,16 @@
       :internal-row-fields="internalRowFields"
       :internal-col-fields="internalColFields"
       :th-style="thStyle"
+      :defaultFieldWidth="defaultFieldWidth"
+      :autoWidth="autoWidth"
       :sorted-rows="sortedRows"
       :sorted-cols="sortedCols"/>
     <RightTable
       :sorted-rows="sortedRows"
       :sorted-cols="sortedCols"
       :tree-data="treeData"
+      :defaultFieldWidth="defaultFieldWidth"
+      :autoWidth="autoWidth"
       :last-height-style="lastHeightStyle"
       :font-size="fontSize"
       :reverse-tree-data="reverseTreeData"
@@ -80,6 +84,14 @@ export default {
     isDataLoading: {
       type: Boolean,
       default: false,
+    },
+    autoWidth: {
+      type: Boolean,
+      default: true,
+    },
+    defaultFieldWidth: {
+      type: Number,
+      default: 100,
     },
     selectAllText: {
       type: String,

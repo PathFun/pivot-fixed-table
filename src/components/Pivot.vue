@@ -120,11 +120,14 @@
           </draggable>
         </div>
         <pivot-table
+          v-if="data && data.length"
           :data="data"
           :padding="newPadding"
           :ops="ops"
+          :auto-width="autoWidth"
           :fieldsWithValues="fieldsWithValues"
           :padding-width="paddingWidth"
+          :defaultFieldWidth="defaultFieldWidth"
           :font-size="fontSize"
           v-model="fieldValues"
           :is-data-loading="isDataLoading"
@@ -191,9 +194,17 @@ export default {
       type: Number,
       default: 14,
     },
+    defaultFieldWidth: {
+      type: Number,
+      default: 100,
+    },
     showChart: {
       type: Boolean,
       default: false,
+    },
+    autoWidth: {
+      type: Boolean,
+      default: true,
     },
     isDataLoading: {
       type: Boolean,
@@ -232,6 +243,7 @@ export default {
   computed: {
     // 从数据中提取值的字段（如果字段具有valueFilter）
     fieldsWithValues() {
+      if (!this.data || !this.data.length) return false;
       // 创建对象: field.key => field
       const fwv = {};
       const { paddingWidth } = this;
@@ -257,15 +269,19 @@ export default {
         fwv[fe.key].values = c;
         if (fe.type !== 'Number') {
           let max = 0;
-          c.forEach((d) => {
-            widthList[d] = getTextWidth(d, this.fontSize)[0] + paddingWidth;
-            totalWidth += widthList[d];
-            if (widthList[d] > max) max = widthList[d];
-          });
-          fwv[fe.key].maxWidth = max;
-          fwv[fe.key].labelWidth = getTextWidth(fwv[fe.key].label, this.fontSize)[0]
-            + paddingWidth + this.showIconWidth;
-          fwv[fe.key].widthList = widthList;
+          if (!this.autoWidth) {
+            totalWidth = c.length * (fwv[fe.key].width || this.defaultFieldWidth);
+          } else {
+            c.forEach((d) => {
+              widthList[d] = getTextWidth(d, this.fontSize)[0] + paddingWidth;
+              totalWidth += widthList[d];
+              if (widthList[d] > max) max = widthList[d];
+            });
+            fwv[fe.key].maxWidth = max;
+            fwv[fe.key].labelWidth = getTextWidth(fwv[fe.key].label, this.fontSize)[0]
+              + paddingWidth + this.showIconWidth;
+            fwv[fe.key].widthList = widthList;
+          }
           fwv[fe.key].totalWidth = totalWidth;
         }
       });

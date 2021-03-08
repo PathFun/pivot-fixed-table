@@ -4,10 +4,15 @@
            :class="top !== 0 ? 'bottom-box-shadow' : ''"
            ref="same-scroll-left">
         <table>
-          <colgroup>
+          <colgroup v-if="autoWidth">
             <col v-for="(col, index) in getWidthList"
                  :key="index"
                  :width="col"/>
+          </colgroup>
+          <colgroup v-else>
+            <col v-for="(c, index) in sortedCols"
+                 :key="index"
+                 :width="getFixedWidth"/>
           </colgroup>
           <thead>
             <tr
@@ -31,10 +36,15 @@
                   :ops="scrollOps"
                   @handle-scroll="scrollFun">
         <table>
-          <colgroup>
+          <colgroup v-if="autoWidth">
             <col v-for="(col, index) in getWidthList"
                  :key="index"
                  :width="col"/>
+          </colgroup>
+          <colgroup v-else>
+            <col v-for="(c,index) in sortedCols"
+                 :key="index"
+                 :width="getFixedWidth"/>
           </colgroup>
           <tr v-for="(row, rowIndex) in sortedRows" :key="rowIndex">
             <template v-if="row.length">
@@ -104,6 +114,14 @@ export default {
       type: Number,
       default: 14,
     },
+    autoWidth: {
+      type: Boolean,
+      default: true,
+    },
+    defaultFieldWidth: {
+      type: Number,
+      default: 100,
+    },
   },
   components: {
     vueScroll,
@@ -149,6 +167,9 @@ export default {
     };
   },
   computed: {
+    getFixedWidth() {
+      return `${last(this.internalColFields).width || this.defaultFieldWidth}px`;
+    },
     getWidthList() {
       const { paddingWidth } = this;
       return this.sortedCols.map((d) => {

@@ -1,9 +1,9 @@
 {
   "name": "pivot-fixed-table",
-  "version": "0.1.3",
+  "version": "0.1.5",
   "description": "pivot-fixed-table",
   "private": false,
-  "main": "lib/pivot-fixed-table.js",
+  "main": "lib/pivot-fixed-table.umd.min.js",
   "keywords": [
     "vue",
     "pivot",
@@ -12,7 +12,11 @@
     "fixed-table",
     "pivot-fixed-table"
   ],
-  "license": "GPL",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/PathFun/pivot-fixed-table.git"
+  },
+  "license": "MIT",
   "author": "pre_story",
   "scripts": {
     "serve": "vue-cli-service serve",

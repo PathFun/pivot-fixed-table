@@ -5,6 +5,7 @@
       :show-chart="false"
       :fields="fields"
       :font-size="12"
+      :auto-width="false"
       :padding="[8, 14]"
       :available-field-keys="availableFieldKeys"
       :target-source-field-keys="targetSourceFieldKeys"
